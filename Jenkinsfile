@@ -1,5 +1,5 @@
 pipeline {
-    agent agent-01
+    agent any
     triggers {
         githubPush()
     }
