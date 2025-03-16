@@ -22,19 +22,24 @@ public class ProductService {
         Product product = Product.builder()
                 .name(productRequest.name())
                 .description(productRequest.description())
+                .skuCode(productRequest.skuCode())
                 .price(productRequest.price())
                 .build();
 
         productRepository.save(product);
         log.info("Create product successfully");
-        return new ProductResponse(product.getId(), product.getName(), product.getDescription(), product.getPrice());
+        return new ProductResponse(product.getId(), product.getName(), product.getDescription(),
+                product.getSkuCode(),
+                product.getPrice());
     }
 
 
     public List<ProductResponse> getAllProduct() {
         return productRepository.findAll()
                 .stream()
-                .map(product -> new ProductResponse(product.getId(), product.getName(), product.getDescription(), product.getPrice()))
+                .map(product -> new ProductResponse(product.getId(), product.getName(), product.getDescription(),
+                        product.getSkuCode(),
+                        product.getPrice()))
                 .toList();
     }
 }
