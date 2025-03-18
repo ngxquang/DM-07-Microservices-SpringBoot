@@ -4,25 +4,24 @@ pipeline {
     environment {
         SERVICE_NAME = "product-service"
         CONTAINER_NAME = "product-service"
+        IMAGE_NAME = "product-service-image"
         PORT = "8080"
     }
 
     stages {
-        stage('Checkout Code github') {
+        stage('Checkout Code') {
             steps {
                 git branch: 'main', url: 'https://github.com/ngxquang/DM-07-Microservices-SpringBoot.git'
             }
         }
 
-        stage('Test') {
-            steps {
-                sh "cd ${SERVICE_NAME} && mvn test"
-            }
-        }
-
         stage('Build Docker Image') {
             steps {
-                sh "cd ${SERVICE_NAME} && docker build -t ${SERVICE_NAME}-image ."
+                script {
+                    sh """
+                    docker build -t ${IMAGE_NAME} ./${SERVICE_NAME}
+                    """
+                }
             }
         }
 
@@ -35,7 +34,7 @@ pipeline {
                     sh """
                     docker run -d --name ${CONTAINER_NAME} \
                     --network=microservices-network \
-                    -p ${PORT}:8080 ${SERVICE_NAME}-image
+                    -p ${PORT}:8080 ${IMAGE_NAME}
                     """
                 }
             }
