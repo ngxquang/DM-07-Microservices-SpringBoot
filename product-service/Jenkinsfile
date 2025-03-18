@@ -1,0 +1,44 @@
+pipeline {
+    agent { label 'agent-01' }
+
+    environment {
+        SERVICE_NAME = "product-service"
+        CONTAINER_NAME = "product-service"
+        PORT = "9000"
+    }
+
+    stages {
+        stage('Checkout Code') {
+            steps {
+                git 'https://github.com/ngxquang/DM-07-Microservices-SpringBoot.git'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                sh "cd ${SERVICE_NAME} && mvn test"
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                sh "cd ${SERVICE_NAME} && docker build -t ${SERVICE_NAME}-image ."
+            }
+        }
+
+        stage('Run Container') {
+            steps {
+                script {
+                    sh "docker stop ${CONTAINER_NAME} || true"
+                    sh "docker rm ${CONTAINER_NAME} || true"
+
+                    sh """
+                    docker run -d --name ${CONTAINER_NAME} \
+                    --network=microservices-network \
+                    -p ${PORT}:9000 ${SERVICE_NAME}-image
+                    """
+                }
+            }
+        }
+    }
+}
