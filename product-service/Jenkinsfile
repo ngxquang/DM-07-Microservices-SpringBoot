@@ -10,7 +10,7 @@ pipeline {
     stages {
         stage('Checkout Code github') {
             steps {
-                git 'https://github.com/ngxquang/DM-07-Microservices-SpringBoot.git'
+                git branch: 'main', url: 'https://github.com/ngxquang/DM-07-Microservices-SpringBoot.git'
             }
         }
 
