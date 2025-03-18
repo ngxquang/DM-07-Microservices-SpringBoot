@@ -2,9 +2,9 @@ pipeline {
     agent { label 'agent-01' }
 
     environment {
-        SERVICE_NAME = "product-service"
-        CONTAINER_NAME = "product-service"
-        PORT = "8080"
+        SERVICE_NAME = "order-service"
+        CONTAINER_NAME = "order-service"
+        PORT = "8081"
     }
 
     stages {
@@ -35,7 +35,7 @@ pipeline {
                     sh """
                     docker run -d --name ${CONTAINER_NAME} \
                     --network=microservices-network \
-                    -p ${PORT}:8080 ${SERVICE_NAME}-image
+                    -p ${PORT}:8081 ${SERVICE_NAME}-image
                     """
                 }
             }
