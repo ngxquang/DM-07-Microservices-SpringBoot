@@ -5,7 +5,7 @@ pipeline {
         SERVICE_NAME = "product-service"
         CONTAINER_NAME = "product-service"
         IMAGE_NAME = "product-service-image"
-        PORT = "8080"
+        PORT = "80801"
     }
 
     stages {
@@ -34,7 +34,7 @@ pipeline {
                     sh """
                     docker run -d --name ${CONTAINER_NAME} \
                     --network=microservices-network \
-                    -p ${PORT}:8080 ${IMAGE_NAME}
+                    -p ${PORT}:80801 ${IMAGE_NAME}
                     """
                 }
             }
