@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage('Build Service') {
       steps {
-        sh 'echo "Testing Multibranch pipeline ..."'
+        sh 'echo "Testing Multibranch pipeline version 2 ..."'
       }
     }
   }
