@@ -52,10 +52,12 @@ export class HomePageComponent implements OnInit {
   orderProduct(product: Product, quantity: string) {
 
     this.oidcSecurityService.userData$.subscribe(result => {
+
+      console.log("Result from keycloak: ", result)
       const userDetails = {
         email: result.userData.email,
-        firstName: result.userData.firstName,
-        lastName: result.userData.lastName
+        firstName: result.userData.given_name,
+        lastName: result.userData.family_name
       };
 
       if(!quantity) {
