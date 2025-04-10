@@ -21,14 +21,12 @@ public class RestClientConfig {
 
     @Value("${inventory.url}")
     private String inventoryServiceUrl;
-    private final ObservationRegistry observationRegistry;
 
     @Bean
     public InventoryClient inventoryClient() {
         RestClient restClient = RestClient.builder()
                 .baseUrl(inventoryServiceUrl)
                 .requestFactory(getClientRequestFactory())
-                .observationRegistry(observationRegistry)
                 .build();
 
         var restClientAdapter = RestClientAdapter.create(restClient);
