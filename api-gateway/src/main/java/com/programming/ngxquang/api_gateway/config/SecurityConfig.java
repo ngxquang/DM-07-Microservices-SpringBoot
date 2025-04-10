@@ -19,7 +19,7 @@ public class SecurityConfig {
 
     private static final Logger log = LogManager.getLogger(SecurityConfig.class);
     private final String[] freeResourceUrls = {"/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**",
-            "/swagger-resources/**", "/api-docs/**", "/aggregate/**"};
+            "/swagger-resources/**", "/api-docs/**", "/aggregate/**", "actuator/prometheus" };
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
