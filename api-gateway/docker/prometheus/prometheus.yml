@@ -32,3 +32,8 @@ scrape_configs:
       - targets: [ 'host.docker.internal:8083' ]
         labels:
           application: 'Notification Service'
+
+  - job_name: 'gateway'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: [ 'host.docker.internal:9000' ]

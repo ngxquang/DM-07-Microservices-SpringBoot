@@ -1,8 +1,10 @@
 package com.programming.ngxquang.api_gateway.config;
 
 
+import com.programming.ngxquang.api_gateway.filters.GatewayCacheFilter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
@@ -11,11 +13,16 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.util.List;
 
 @Configuration
 public class SecurityConfig {
+
+    @Autowired
+    private GatewayCacheFilter gatewayCacheFilter;
+
 
     private static final Logger log = LogManager.getLogger(SecurityConfig.class);
     private final String[] freeResourceUrls = {"/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**",
@@ -32,6 +39,7 @@ public class SecurityConfig {
                         .anyRequest()
                 .authenticated())
                 .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()))
+//                .addFilterAfter(gatewayCacheFilter, org.springframework.security.web.authentication.AnonymousAuthenticationFilter.class)
                 .build();
     }
 

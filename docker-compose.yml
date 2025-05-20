@@ -3,7 +3,7 @@ version: '4'
 services:
   mongodb:
     image: mongo:7.0.5
-    container_name: mongo_db
+    container_name: mongo_db_cache
     ports:
       - "27017:27017"
     environment:

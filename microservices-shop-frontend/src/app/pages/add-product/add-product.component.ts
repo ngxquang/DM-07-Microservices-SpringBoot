@@ -34,6 +34,7 @@ export class AddProductComponent {
         price: this.addProductForm.get('price')?.value
       }
       this.productService.createProduct(product).subscribe(product => {
+        console.log('product:::', product);
         this.productCreated = true;
         this.addProductForm.reset();
       })

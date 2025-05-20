@@ -31,16 +31,19 @@ export class HomePageComponent implements OnInit {
   orderFailed = false;
 
   ngOnInit(): void {
-    this.oidcSecurityService.isAuthenticated$.subscribe(
-      ({isAuthenticated}) => {
-        this.isAuthenticated = isAuthenticated;
-        this.productService.getProducts()
-          .pipe()
-          .subscribe(product => {
+    console.time('ProductLoad');
+
+      this.oidcSecurityService.isAuthenticated$.subscribe(
+        ({ isAuthenticated }) => {
+          this.isAuthenticated = isAuthenticated;
+
+          this.productService.getProducts().subscribe(product => {
             this.products = product;
-          })
-      }
-    )
+
+            console.timeEnd('ProductLoad');  // Đo thời gian load product
+          });
+        }
+      );
 
     console.log("product::::", this.products)
   }
