@@ -67,5 +67,14 @@ public class RedisConfig {
                 .build();
     }
 
+    @Bean
+    public ObjectMapper objectMapper() {
+        return new ObjectMapper()
+                .registerModule(new ParameterNamesModule())
+                .registerModule(new Jdk8Module())
+                .registerModule(new JavaTimeModule());
+    }
+
+
 }
 
