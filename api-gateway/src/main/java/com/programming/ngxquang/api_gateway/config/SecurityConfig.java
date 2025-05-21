@@ -1,8 +1,6 @@
 package com.programming.ngxquang.api_gateway.config;
 
 
-//import com.programming.ngxquang.api_gateway.filters.GatewayCacheFilter;
-import com.programming.ngxquang.api_gateway.filters.GatewayCacheFilter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +19,6 @@ import java.util.List;
 @Configuration
 public class SecurityConfig {
 
-    @Autowired
-    private GatewayCacheFilter gatewayCacheFilter;
-
-
     private static final Logger log = LogManager.getLogger(SecurityConfig.class);
     private final String[] freeResourceUrls = {"/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**",
             "/swagger-resources/**", "/api-docs/**", "/aggregate/**", "/actuator/prometheus" };
@@ -40,7 +34,6 @@ public class SecurityConfig {
                         .anyRequest()
                 .authenticated())
                 .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()))
-                .addFilterAfter(gatewayCacheFilter, org.springframework.security.web.authentication.AnonymousAuthenticationFilter.class)
                 .build();
     }
 
